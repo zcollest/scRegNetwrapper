@@ -10,12 +10,14 @@ run_dorothea(seurat_obj, conf_scores, cores = 16)
 \item{seurat_obj}{seurat object}
 
 \item{conf_scores}{vector of DoRothEA confidence scores (A,B,C,D,E)}
+
+\item{cores}{number of cores to use for calculation (default = 16)}
 }
 \description{
 Takes a seurat object and a vector of DoRothEA confidence levels and returns the same Seurat object with a "dorothea" assay of TF activity scores.
 }
 \examples{
-run_dorothea(pbmc10k, c("A","B","C","D"))
+run_dorothea(pbmc10k, c("A","B","C","D"),cores=20)
 }
 \keyword{VIPER}
 \keyword{calculations}

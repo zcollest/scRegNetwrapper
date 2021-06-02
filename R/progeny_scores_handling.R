@@ -1,8 +1,8 @@
 #' Handling the progeny scores (proportion adjustments, summarizing by cell type, etc.)
 #'
-#' This function takes a seurat object and produces a list of dataframes that are necessary for downstream analysis
+#' Takes a Seurat object and produces a list of data frames that are necessary for downstream analysis
 #' @param seurat_obj seurat object
-#' @param comparison_feature which metadata do you want to do comparisons for?
+#' @param comparison_feature which metadata feature do you want to do comparisons for?
 #' @keywords progeny score handling
 #' @export
 #' @import Seurat
@@ -11,9 +11,9 @@
 #' @import tibble
 #' @import tidyr
 #' @examples
-#' progeny_scores_handling(seurat_obj,30)
+#' handle_progeny_scores(pnmc10k,30)
 
-progeny_scores_handling <- function(seurat_obj, comparison_feature){
+handle_progeny_scores <- function(seurat_obj, comparison_feature){
   progeny_scores_df <- as.data.frame(t(GetAssayData(seurat_obj, slot = "scale.data",
                                                     assay = "progeny"))) %>% data.frame(check.names = F)
 

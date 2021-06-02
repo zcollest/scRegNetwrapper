@@ -1,7 +1,7 @@
 #' Handling the dorothea scores (proportion adjustments, summarizing by cell type, etc.)
 #'
-#' This function takes a seurat object and produces a list of dataframes that are necessary for downstream analysis
-#' @param seurat_obj seurat object
+#' Takes a Seurat object and produces a list of data frames that are necessary for downstream analysis
+#' @param seurat_obj Seurat object
 #' @param comparison_feature which metadata do you want to do comparisons for?
 #' @param topTFs number of top TFs to be us ed for heatmap downstream
 #' @keywords dorothea score handling
@@ -12,9 +12,9 @@
 #' @import tibble
 #' @import tidyr
 #' @examples
-#' dorothea_scores_handling(seurat_obj,seurat_obj$meta.data$cell_type, 30)
+#' handle_dorothea_scores(seurat_obj,seurat_obj$meta.data$cell_type, 30)
 
-dorothea_scores_handling <- function(seurat_obj,comparison_feature, topTFs){
+handle_dorothea_scores <- function(seurat_obj,comparison_feature, topTFs){
   # extract scores
   viper_scores_df <- GetAssayData(seurat_obj, slot = "scale.data",
                                   assay = "dorothea") %>%
