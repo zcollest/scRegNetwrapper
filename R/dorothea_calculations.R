@@ -1,6 +1,6 @@
 #' Calculating VIPER scores (TF Activity) from DoRothEA Regulons
 #'
-#' This function takes a seurat object and a vector of DoRothEA confidence levels and returns the same Seurat object with a "dorothea" assay.
+#' Takes a seurat object and a vector of DoRothEA confidence levels and returns the same Seurat object with a "dorothea" assay of TF activity scores.
 #' @param seurat_obj seurat object
 #' @param conf_scores vector of DoRothEA confidence scores (A,B,C,D,E)
 #' @keywords VIPER calculations
@@ -10,10 +10,10 @@
 #' @import dplyr
 #' @import tibble
 #' @examples
-#' dorothea_tf_calc(seurat_obj, c("A","B","C","D"))
+#' run_dorothea(pbmc10k, c("A","B","C","D"))
 
 
-dorothea_tf_calc <- function(seurat_obj, conf_scores){
+run_dorothea <- function(seurat_obj, conf_scores, cores=16){
 
   ## read Dorothea regulons for Human:
   dorothea_regulon_human <- get(data("dorothea_hs", package = "dorothea"))
@@ -26,7 +26,7 @@ dorothea_tf_calc <- function(seurat_obj, conf_scores){
   DefaultAssay(seurat_obj) <- "RNA"
   seurat_obj <- run_viper(seurat_obj, regulon,
                           options = list(method = "scale", minsize = 4,
-                                         eset.filter = FALSE, cores = 16,
+                                         eset.filter = FALSE, cores = cores,
                                          verbose = FALSE))
   ## scale the tf activity scores
   seurat_obj <- Seurat::ScaleData(seurat_obj, assay = "dorothea")
@@ -36,7 +36,7 @@ dorothea_tf_calc <- function(seurat_obj, conf_scores){
 
 #' Returning DoRothEA Regulons
 #'
-#' This function returns DoRothEA regulons from a vector of DoRothEA confidence levels.
+#' Returns DoRothEA regulons from a vector of DoRothEA confidence levels.
 #' @param conf_scores vector of DoRothEA confidence scores (A,B,C,D,E)
 #' @keywords DoRothEA Regulon
 #' @export
@@ -54,18 +54,18 @@ get_dorothea_regulons <- function(conf_scores){
 }
 
 
-#' Using VIPER to calculate TF activity using a dataframe of custom regulons
+#' Using VIPER to calculate TF activity using a data frame of custom regulons
 #'
-#' This function uses VIPER to quantify TF activity given a dataframe of custom regulons and returns a seurat object assay with the results.
+#' This function uses VIPER to quantify TF activity given a data frame of custom regulons and returns a Seurat object assay with the results.
 #' @param seurat_obj seurat object
 #' @param regulons dataframe of custom regulons (must be same format as DoRothEA regulons)
 #' @param assay_name string to name the resulting Seurat object assay
 #' @keywords custom TF regulons
 #' @export
 #' @examples
-#' custom_tf_calc(data,regulons,"custom_TFactivity"))
+#' custom_regulons_calc(data,regulons,"custom_TFactivity"))
 
-custom_tf_calc <- function(seurat_obj, regulons, assay_name){
+custom_regulons_calc <- function(seurat_obj, regulons, assay_name){
   ## compute Viper Scores
   if ("dorothea" %in% Assays(seurat_obj)){
     dorothea_data <- as.matrix(Seurat::GetAssayData(seurat_obj, assay = "dorothea",
