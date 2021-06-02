@@ -17,7 +17,7 @@ get_progeny_pathways(full_model = TRUE, num_genes = NULL, organism = "Human")
 This function returns PROGENy pathways
 }
 \examples{
-get_progeny_pathways(full_model=FALSE, num_genes=100, organism = "Human")
+get_progeny_pathways(full_model=FALSE, 100, "Human")
 }
 \keyword{PROGENy}
 \keyword{pathways}

@@ -10,7 +10,7 @@ get_dorothea_regulons(conf_scores)
 \item{conf_scores}{vector of DoRothEA confidence scores (A,B,C,D,E)}
 }
 \description{
-This function returns DoRothEA regulons from a vector of DoRothEA confidence levels.
+Returns DoRothEA regulons from a vector of DoRothEA confidence levels.
 }
 \examples{
 get_dorothea_regulons(c("A","B","C","D"))
