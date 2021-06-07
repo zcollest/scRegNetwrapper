@@ -15,7 +15,7 @@ The calculation of DoRothEA/PROGENy scores requires a Seurat object of scRNAseq 
 
 To obtain more information about any specific function, run `?"function_name"()` in your R session.
 
-#### Quantifying transcription factor and pathway activity
+### Quantifying transcription factor and pathway activity
 The first step is to quantify the activity of transcription factors and/or pathways from the scRNAseq gene expression data. To better understand the DoRothEA confidence scores used in the `run_dorothea()` function, please refer to the DoRothEA package from the Saez Lab: https://github.com/saezlab/dorothea/. To better understand the inputs for the `run_progeny()` function, please refer to the PROGENy package from the Saez Lab: https://github.com/saezlab/progeny/. 
 
 ```R
@@ -27,13 +27,38 @@ pbmc <- run_progeny(seurat_obj = pbmc, num_genes = 500, organism = "Human")
 pbmc <- custom_pathways_calc(seurat_obj = pbmc, regulons = regulons, assay_name = "custom_regulon_scores")
 pbmc <- custom_regulons_calc(seurat_obj = pbmc, pathways = pathways, num_genes = 100, organism = "Human", assay_name = "custom_pathway_scores") 
 ```
-#### Handling scores for downstream analysis
+### Handling scores for downstream analysis
 These functions organize the cell-wise transcription factor and pathway scores into various data frames that can be used for downstream analyses. The functions require a `comparison_feature` argument, which is important for two reasons: <br>
 1. It defines the output of the heatmap used for downstram analyses
 2. It adjusts the cell-wise scores based on the proportion of cells in each category of the comparison feature (i.e. healthy vs disease).
 ```R
 # Handling scores 
 tf_scores <- handle_dorothea_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication, topTFs = 30)
-pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, num_genes = 500, organism = "Human")
-
+pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication)
 ```
+
+### Visualizing the results with heatmaps (this section is work in progress)
+There are multiple ways that you can visualize these scores. Perhaps one of the best ways is to look at a heatmap of transcription factor or pathway activity for a given comparison (cluster-wise comparisons, healthy vs disease comparisons, etc.). For example, this can be useful for visualizing cell-type heterogeneity from the perspective of transcription factors and pathways. The `downstream_heatmap` allows a user to quickly and easily output a basic heatmap, but the source code can easily be modified to produce heatmaps more aligned to the user's preferences.
+
+```R
+downstream_heatmap(data = dorothea_scores$proportionadjusted_tfs_bygroup, title = "progeny pathways, by indication (healthy vs HS)")
+downstream_heatmap(data = progeny_scores$proportionadjusted_pathways_bygroup, title = "progeny pathways, by indication (healthy vs HS)")
+```
+
+### Effect size calculations (Cohen's D) 
+To determine statistical significance for comparisons between two groups (i.e. healthy vs disease), the user can calculate effect sizes (Cohen's D scores) for each transcription factor and pathway. The output is a data frame with columns that include transcription factor / pathway name and its corresponding Cohen's D score. 
+
+```R
+cohend_dorothea <- tf_effsize_calc(data = dorothea_scores$proportionadjusted_scores_bycell)
+cohend_progeny <- pathway_effsize_calc(data = progeny_scores$proportionadjusted_scores_bycell)
+```
+
+### Finding transcription factors associated with a vector of genes  
+Given an input vector of gene names, this function searches the regulons of the transcriptions for those genes. Optional arguments include effect size data as well as transcription factor activity summarized by comparison group (one of the outputs from the `handle_dorothea_scores()` function.  It returns a list of data frames in which each data frame is a target gene and returns the associated transcription factor as well as the effect size for each associated transcription factor with respect to the comparison group. 
+
+```R
+gene_vector <- c("CHD8","DOK2","RGS4","FOCAD-AS1","PYGB") # these genes were generated from a random gene set generator 
+gene_associations <- find_associated_TFs(gene_vector=gene_vector, tf_data_bygroup=dorothea_scores$proportionadjusted_scores_bygroup, effect_size_data=cohend_dorothea)
+```
+
+### Correlation Analysis (this section is work in progress)
