@@ -13,8 +13,10 @@ The calculation of DoRothEA/PROGENy scores requires a Seurat object of scRNAseq 
 
 ## Tutorial
 
+To obtain more information about any specific function, run `?"function_name"()` in your R session.
+
 #### Quantifying transcription factor and pathway activity
-The first step is to quantify the activity of transcription factors and/or pathways from the scRNAseq gene expression data. To better understand the DoRothEA confidence scores used in the `run_dorothea()` function, please refer to the DoRothEA package from the Saez Lab: https://github.com/saezlab/dorothea/. To better understand the inputs for the `run_progeny()` function, please refer to the PROGENy package from the Saez Lab: https://github.com/saezlab/progeny/. To obtain more information about any specific function, run `?"function_name"()` in your R session.
+The first step is to quantify the activity of transcription factors and/or pathways from the scRNAseq gene expression data. To better understand the DoRothEA confidence scores used in the `run_dorothea()` function, please refer to the DoRothEA package from the Saez Lab: https://github.com/saezlab/dorothea/. To better understand the inputs for the `run_progeny()` function, please refer to the PROGENy package from the Saez Lab: https://github.com/saezlab/progeny/. 
 
 ```R
 # Running dorothea and progeny
@@ -27,10 +29,11 @@ pbmc <- custom_regulons_calc(seurat_obj = pbmc, pathways = pathways, num_genes =
 ```
 #### Handling scores for downstream analysis
 These functions organize the cell-wise transcription factor and pathway scores into various data frames that can be used for downstream analyses. The functions require a `comparison_feature` argument, which is important for two reasons: <br>
-1. 
+1. It defines the output of the heatmap used for downstram analyses
+2. It adjusts the cell-wise scores based on the proportion of cells in each category of the comparison feature (i.e. healthy vs disease).
 ```R
 # Handling scores 
 tf_scores <- handle_dorothea_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication, topTFs = 30)
-pathway_scores <- handle_progeny_scores (seurat_obj = pbmc, num_genes = 500, organism = "Human")
+pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, num_genes = 500, organism = "Human")
 
 ```
