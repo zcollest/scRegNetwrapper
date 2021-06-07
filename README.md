@@ -2,7 +2,9 @@
 Wrapper functions for single cell regulatory network analysis (DoRothEA, PROGENy) as well as tools for downstream analysis.
 
 ## Installation
- ```R library(devtools)
+ ```R 
+library(devtools)
 install_github("zcollest/scRegNetwrapper")
-library(scRegNetwrapper)```
+library(scRegNetwrapper)
+```
 
