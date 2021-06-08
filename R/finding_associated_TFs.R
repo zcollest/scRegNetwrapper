@@ -5,6 +5,7 @@
 #' @param gene_vector vector of genes
 #' @param tf_data_bygroup TF data summarized by comparison group
 #' @param effect_size_data dataframe of cohen's D scores for a given comparison (optional, only if comparison is 2 groups)
+#' @param custom_regulons searches custom TF regulons for genes in gene vector, default is FALSE.
 #' @keywords find associated TFs
 #' @export
 #' @import Seurat
@@ -13,12 +14,17 @@
 #' @import tibble
 #' @import tidyr
 #' @examples
-#' find_associated_TFs(gene_vector, tf_data_bygroup, effect_size_data)
+#' find_associated_TFs(gene_vector, tf_data_bygroup, effect_size_data, custom_regulons=custom_regulons)
 
-find_associated_TFs <- function(gene_vector, tf_data_bygroup=NULL, effect_size_data=NULL){
+find_associated_TFs <- function(gene_vector, tf_data_bygroup=NULL, effect_size_data=NULL, custom_regulons=NULL){
   genereg <- list()
-  dorothea_regulon_human <- get(data("dorothea_hs", package = "dorothea"))
-  regulon <- dorothea_regulon_human %>% filter(confidence %in% c("A","B","C","D","E"))
+  if (missing(custom_regulons)){
+    dorothea_regulon_human <- get(data("dorothea_hs", package = "dorothea"))
+    regulon <- dorothea_regulon_human %>% filter(confidence %in% c("A","B","C","D","E"))
+  }
+  else {
+    regulon <- custom_regulons
+  }
   if (missing(tf_data_bygroup)){
     for (gene in gene_vector) {
       genereg[[gene]] <- regulon %>% filter(target %in% gene)

@@ -7,7 +7,8 @@
 find_associated_TFs(
   gene_vector,
   tf_data_bygroup = NULL,
-  effect_size_data = NULL
+  effect_size_data = NULL,
+  custom_regulons = NULL
 )
 }
 \arguments{
@@ -16,13 +17,15 @@ find_associated_TFs(
 \item{tf_data_bygroup}{TF data summarized by comparison group}
 
 \item{effect_size_data}{dataframe of cohen's D scores for a given comparison (optional, only if comparison is 2 groups)}
+
+\item{custom_regulons}{searches custom TF regulons for genes in gene vector, default is FALSE.}
 }
 \description{
 This function takes a vector of genes and TF activity data (by group, not by cell...optional) and a dataframe of cohen's D scores (if the comparison is 2 groups...optional).
 If only the gene vector is supplied, the function will return all TFs for which a given gene is part of the regulon for the entire dorothea collection of TFs.
 }
 \examples{
-find_associated_TFs(gene_vector, tf_data_bygroup, effect_size_data)
+find_associated_TFs(gene_vector, tf_data_bygroup, effect_size_data, custom_regulons=custom_regulons)
 }
 \keyword{TFs}
 \keyword{associated}

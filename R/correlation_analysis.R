@@ -13,13 +13,18 @@
 #' @import pheatmap
 #' @import corrplot
 #' @examples
-#' correlation_analysis(tf_data_bycell, pathway_data_bycell)
+#' correlation_analysis(tf_data_bycell, pathway_data_bycell, return_corr_data=FALSE, render_plot=TRUE)
 
 correlation_analysis <- function(tf_data, pathway_data,render_plot=TRUE,return_corr_data=FALSE){
   names(pathway_data) <- paste(names(pathway_data),"(P)", sep="")
   joint_df <- cbind(tf_data, pathway_data)
   res <- cor(joint_df, method="pearson")
   cols <- brewer.pal(8, "RdBu")
-  corrplot(res, type = "upper", order = "hclust",
-           tl.col = "black", tl.srt = 45, tl.cex=0.6, col=colorRampPalette(c("navy","grey","dark red"))(200))
+  if (render_plot==TRUE){
+    corrplot(res, type = "upper", order = "hclust",
+             tl.col = "black", tl.srt = 45, tl.cex=0.6, col=colorRampPalette(c("navy","grey","dark red"))(200))
+  }
+  if (return_corr_data==TRUE){
+    return(res)
+  }
 }
