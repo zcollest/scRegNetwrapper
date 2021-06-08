@@ -37,12 +37,12 @@ tf_scores <- handle_dorothea_scores(seurat_obj = pbmc, comparison_feature = pbmc
 pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication)
 ```
 
-### Visualizing the results with heatmaps (this section is work in progress)
+### Visualizing the results with heatmaps 
 There are multiple ways that you can visualize these scores. Perhaps one of the best ways is to look at a heatmap of transcription factor or pathway activity for a given comparison (cluster-wise comparisons, healthy vs disease comparisons, etc.). For example, this can be useful for visualizing cell-type heterogeneity from the perspective of transcription factors and pathways. The `downstream_heatmap` allows a user to quickly and easily output a basic heatmap, but the source code can easily be modified to produce heatmaps more aligned to the user's preferences.
 
 ```R
-downstream_heatmap(data = dorothea_scores$proportionadjusted_tfs_bygroup, title = "progeny pathways, by indication (healthy vs HS)")
-downstream_heatmap(data = progeny_scores$proportionadjusted_pathways_bygroup, title = "progeny pathways, by indication (healthy vs HS)")
+downstream_heatmap(data = dorothea_scores$proportionadjusted_tfs_bygroup, title = "progeny pathways, by indication (healthy vs disease)")
+downstream_heatmap(data = progeny_scores$proportionadjusted_pathways_bygroup, title = "progeny pathways, by indication (healthy vs disease)")
 ```
 
 ### Effect size calculations (Cohen's D) 
@@ -62,3 +62,4 @@ gene_associations <- find_associated_TFs(gene_vector=gene_vector, tf_data_bygrou
 ```
 
 ### Correlation Analysis (this section is work in progress)
+Another interesting way to visualize the results 
