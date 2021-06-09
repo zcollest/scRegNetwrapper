@@ -2,8 +2,9 @@
 #'
 #' When selecting progeny pathway data and choosing only a subset of the top genes from each pathway, the output is a sparse matrix and is not conducive to downstream analysis. This reformats to a long data frame. 
 #' @param pathway_data progeny pathway data for top n genes (from `get_progeny_pathways()` function)
-#' @keywords refornmat progeny pathways
+#' @keywords reformat progeny pathways
 #' @export
+#' @examples
 #' reformat_progeny_pathways(pathway_data = top500genes_progenypathways)
 
 reformat_progeny_pathways <- function(pathway_data){
