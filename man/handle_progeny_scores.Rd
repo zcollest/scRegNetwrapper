@@ -4,12 +4,14 @@
 \alias{handle_progeny_scores}
 \title{Handling the progeny scores (proportion adjustments, summarizing by cell type, etc.)}
 \usage{
-handle_progeny_scores(seurat_obj, comparison_feature)
+handle_progeny_scores(seurat_obj, comparison_feature, assay_name = NULL)
 }
 \arguments{
 \item{seurat_obj}{seurat object}
 
 \item{comparison_feature}{which metadata feature do you want to do comparisons for?}
+
+\item{assay_name}{if using custom pathways, what's the assay name?}
 }
 \description{
 Takes a Seurat object and produces a list of data frames that are necessary for downstream analysis

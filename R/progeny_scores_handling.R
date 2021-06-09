@@ -3,6 +3,7 @@
 #' Takes a Seurat object and produces a list of data frames that are necessary for downstream analysis
 #' @param seurat_obj seurat object
 #' @param comparison_feature which metadata feature do you want to do comparisons for?
+#' @param assay_name if using custom pathways, what's the assay name?
 #' @keywords progeny score handling
 #' @export
 #' @import Seurat
@@ -13,10 +14,15 @@
 #' @examples
 #' handle_progeny_scores(pnmc10k,30)
 
-handle_progeny_scores <- function(seurat_obj, comparison_feature){
-  progeny_scores_df <- as.data.frame(t(GetAssayData(seurat_obj, slot = "scale.data",
-                                                    assay = "progeny"))) %>% data.frame(check.names = F)
-
+handle_progeny_scores <- function(seurat_obj, comparison_feature, assay_name = NULL){
+  if (missing(assay_name)){
+    progeny_scores_df <- as.data.frame(t(GetAssayData(seurat_obj, slot = "scale.data",
+                                                      assay = "progeny"))) %>% data.frame(check.names = F)
+  }
+  else{
+    progeny_scores_df <- as.data.frame(t(GetAssayData(seurat_obj, slot = "scale.data",
+                                                      assay = assay_name))) %>% data.frame(check.names = F)
+  }
   seurat_obj$cell_type <- comparison_feature
   cell_type_table <- data.frame(table(seurat_obj$cell_type))
   totalcells <- dim(seurat_obj)[2]

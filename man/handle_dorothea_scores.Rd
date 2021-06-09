@@ -4,7 +4,12 @@
 \alias{handle_dorothea_scores}
 \title{Handling the dorothea scores (proportion adjustments, summarizing by cell type, etc.)}
 \usage{
-handle_dorothea_scores(seurat_obj, comparison_feature, topTFs)
+handle_dorothea_scores(
+  seurat_obj,
+  comparison_feature,
+  topTFs,
+  assay_name = NULL
+)
 }
 \arguments{
 \item{seurat_obj}{Seurat object}
@@ -12,6 +17,8 @@ handle_dorothea_scores(seurat_obj, comparison_feature, topTFs)
 \item{comparison_feature}{which metadata do you want to do comparisons for?}
 
 \item{topTFs}{number of top TFs to be us ed for heatmap downstream}
+
+\item{assay_name}{if using custom TFs, what's the assay name?}
 }
 \description{
 Takes a Seurat object and produces a list of data frames that are necessary for downstream analysis

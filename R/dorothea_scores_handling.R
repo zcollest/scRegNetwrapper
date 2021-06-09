@@ -4,6 +4,7 @@
 #' @param seurat_obj Seurat object
 #' @param comparison_feature which metadata do you want to do comparisons for?
 #' @param topTFs number of top TFs to be us ed for heatmap downstream
+#' @param assay_name if using custom TFs, what's the assay name?
 #' @keywords dorothea score handling
 #' @export
 #' @import Seurat
@@ -14,12 +15,20 @@
 #' @examples
 #' handle_dorothea_scores(seurat_obj,seurat_obj$meta.data$cell_type, 30)
 
-handle_dorothea_scores <- function(seurat_obj,comparison_feature, topTFs){
+handle_dorothea_scores <- function(seurat_obj,comparison_feature, topTFs, assay_name=NULL){
   # extract scores
-  viper_scores_df <- GetAssayData(seurat_obj, slot = "scale.data",
-                                  assay = "dorothea") %>%
-    data.frame(check.names = F) %>%
-    t()
+  if (missing(assay_name)){
+    viper_scores_df <- GetAssayData(seurat_obj, slot = "scale.data",
+                                    assay = "dorothea") %>%
+      data.frame(check.names = F) %>%
+      t()
+  }
+  else{
+    viper_scores_df <- GetAssayData(seurat_obj, slot = "scale.data",
+                                    assay = assay_name) %>%
+      data.frame(check.names = F) %>%
+      t()
+  }
 
   # get a dataframe of cell cell types, frequency, and cell type proportions
   seurat_obj$cell_type <- comparison_feature
