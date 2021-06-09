@@ -1,7 +1,7 @@
 #' Given a list of genes, find which pathways they are associated with and see how statistically significant those pathways are for a given comparison (e.g. healthy vs disease)
 #'
 #' This function takes a vector of genes and pathway activity data (by group, not by cell...optional) and a data frame of cohen's D scores (if the comparison is 2 groups...optional).
-#' If only the gene vector is supplied, the function will return all pathways for which a given gene is part of the pathway's gene set. 
+#' If only the gene vector is supplied, the function will return all pathways for which a given gene is part of the pathway's gene set.
 #' @param gene_vector vector of genes
 #' @param pathway_data_bygroup pathway data summarized by comparison group
 #' @param effect_size_data dataframe of cohen's D scores for a given comparison (optional, only if comparison is 2 groups)
@@ -22,7 +22,8 @@
 find_associated_pathways <- function(gene_vector, pathway_data_bygroup=NULL, effect_size_data=NULL, custom_pathways=NULL, progeny_pathways=TRUE, num_genes=500, organism="Human"){
   pathway_associations <- list()
   if (missing(custom_pathways)){
-    pathways <- get_progeny_pathways(num_genes = num_genes, organism = organism)
+    pathways <- get_progeny_pathways(num_genes, organism)
+    pathways <- reformat_progeny_pathways(pathways)
   }
   else {
    pathways  <- custom_pathways
