@@ -6,6 +6,7 @@
 \usage{
 correlation_analysis(
   tf_data,
+  method = "pearson",
   pathway_data,
   render_plot = TRUE,
   return_corr_data = FALSE
@@ -14,6 +15,8 @@ correlation_analysis(
 \arguments{
 \item{tf_data}{transcription factor data by cell}
 
+\item{method}{correlation method, default = "pearson"}
+
 \item{pathway_data}{pathway data by cell}
 
 \item{render_plot}{render plot? default = TRUE}
@@ -21,7 +24,7 @@ correlation_analysis(
 \item{return_corr_data}{return the correlation data? default = FALSE}
 }
 \description{
-Takes cell-wise data from the 'scores_handling' functions and generates a correlation matrix
+Takes cell-wise data from the 'scores_handling' functions and generates a correlation matrix. Method argument refers to correlation methods with respect to the \code{corrplot} package.
 }
 \examples{
 correlation_analysis(tf_data_bycell, pathway_data_bycell, return_corr_data=FALSE, render_plot=TRUE)
