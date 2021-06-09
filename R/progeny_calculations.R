@@ -30,10 +30,10 @@ run_progeny <- function(seurat_obj, num_genes, organism="Human"){
 #' @keywords PROGENy pathways
 #' @export
 #' @examples
-#' get_progeny_pathways(full_model=FALSE, 100, "Human")
+#' get_progeny_pathways(num_genes=100, "Human")
 
-get_progeny_pathways <- function(full_model = TRUE, num_genes = NULL, organism = "Human"){
-  if (full_model == TRUE){
+get_progeny_pathways <- function(num_genes = NULL, organism = "Human"){
+  if (missing(num_genes)){
     return(get("model_human_full", envir = .GlobalEnv))
   }
   else {

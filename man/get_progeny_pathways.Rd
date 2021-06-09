@@ -4,20 +4,20 @@
 \alias{get_progeny_pathways}
 \title{Returning PROGENy pathways}
 \usage{
-get_progeny_pathways(full_model = TRUE, num_genes = NULL, organism = "Human")
+get_progeny_pathways(num_genes = NULL, organism = "Human")
 }
 \arguments{
-\item{full_model}{return the full model? Defaults to TRUE.}
-
 \item{num_genes}{number of top genes to return for each pathway if full_model = FALSE.}
 
 \item{organism}{"Human" or "Mouse", defaults to "Human".}
+
+\item{full_model}{return the full model? Defaults to TRUE.}
 }
 \description{
 This function returns PROGENy pathways
 }
 \examples{
-get_progeny_pathways(full_model=FALSE, 100, "Human")
+get_progeny_pathways(num_genes=100, "Human")
 }
 \keyword{PROGENy}
 \keyword{pathways}

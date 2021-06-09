@@ -17,7 +17,7 @@
 #' find_associated_TFs(gene_vector, tf_data_bygroup, effect_size_data, custom_regulons=custom_regulons)
 
 find_associated_TFs <- function(gene_vector, tf_data_bygroup=NULL, effect_size_data=NULL, custom_regulons=NULL){
-  genereg <- list()
+  associated_TFs <- list()
   if (missing(custom_regulons)){
     dorothea_regulon_human <- get(data("dorothea_hs", package = "dorothea"))
     regulon <- dorothea_regulon_human %>% filter(confidence %in% c("A","B","C","D","E"))
@@ -27,7 +27,7 @@ find_associated_TFs <- function(gene_vector, tf_data_bygroup=NULL, effect_size_d
   }
   if (missing(tf_data_bygroup)){
     for (gene in gene_vector) {
-      genereg[[gene]] <- regulon %>% filter(target %in% gene)
+      associated_TFs[[gene]] <- regulon %>% filter(target %in% gene)
     }
   }
   else{
@@ -35,21 +35,21 @@ find_associated_TFs <- function(gene_vector, tf_data_bygroup=NULL, effect_size_d
     rankings_by_var <- rankings_by_var[order(-rankings_by_var$var),]
     rankings_by_var$rank <- 1:nrow(rankings_by_var)
     for (gene in gene_vector) {
-      genereg[[gene]] <- regulon %>% filter(target %in% gene)
-      tfs <- rankings_by_var %>% filter(tf %in% genereg[[gene]]$tf)
-      genereg[[gene]] <- merge(genereg[[gene]], tfs, by="tf")
-      genereg[[gene]] <- genereg[[gene]][order(genereg[[gene]]$rank),]
-      row.names(genereg[[gene]]) <- NULL
+      associated_TFs[[gene]] <- regulon %>% filter(target %in% gene)
+      tfs <- rankings_by_var %>% filter(tf %in% associated_TFs[[gene]]$tf)
+      associated_TFs[[gene]] <- merge(associated_TFs[[gene]], tfs, by="tf")
+      associated_TFs[[gene]] <- associated_TFs[[gene]][order(associated_TFs[[gene]]$rank),]
+      row.names(associated_TFs[[gene]]) <- NULL
       if (missing(effect_size_data)){
         next
       }
       else{
-        genereg[[gene]] <- merge(genereg[[gene]], effect_size_data, by="tf")
-        genereg[[gene]] <- genereg[[gene]][order(genereg[[gene]]$rank),]
-        genereg[[gene]]$var <- NULL
-        row.names(genereg[[gene]]) <- NULL
+        associated_TFs[[gene]] <- merge(associated_TFs[[gene]], effect_size_data, by="tf")
+        associated_TFs[[gene]] <- associated_TFs[[gene]][order(associated_TFs[[gene]]$rank),]
+        associated_TFs[[gene]]$var <- NULL
+        row.names(associated_TFs[[gene]]) <- NULL
       }
     }
   }
-  return(genereg)
+  return(associated_TFs)
 }
