@@ -11,7 +11,7 @@
 #' @import tidyr
 #' @import effsize
 #' @examples
-#' tf_effsize_calc(tf_data_bycell)
+#' tf_effsize_calc(tf_data_bycell=tf_data_bycell)
 
 tf_effsize_calc <- function(tf_data_bycell){
   stats_df <- data.frame()

@@ -13,7 +13,7 @@ tf_effsize_calc(tf_data_bycell)
 This function takes a dorothea (or more generally tf activity) data by cell and produces a dataframe of cohen's D scores for each TF.
 }
 \examples{
-tf_effsize_calc(tf_data_bycell)
+tf_effsize_calc(tf_data_bycell=tf_data_bycell)
 }
 \keyword{calculation}
 \keyword{dorothea}
