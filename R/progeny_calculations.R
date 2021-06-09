@@ -64,11 +64,11 @@ custom_pathways_calc <- function(seurat_obj, pathways, num_genes, organism="Huma
   DefaultAssay(seurat_obj) <- "RNA"
   if (organism == "Human"){
     model_human_full <- pathways
-    seurat_obj <- progeny_score_calc(seurat_obj,num_genes,"Human")
+    seurat_obj <- run_progeny(seurat_obj,num_genes,"Human")
   }
   else if (organism == "Mouse"){
     model_mouse_full <- pathways
-    seurat_obj <- progeny_score_calc(seurat_obj,num_genes,"Mouse")
+    seurat_obj <- run_progeny(seurat_obj,num_genes,"Mouse")
   }
   seurat_obj[[assay_name]] <- seurat_obj[["progeny"]]
   seurat_obj@assays[["progeny"]]@data <- progeny_data
