@@ -16,7 +16,7 @@ The calculation of DoRothEA/PROGENy scores requires a Seurat object of scRNAseq 
 To obtain more information about any specific function, run `?"function_name"()` in your R session.
 
 ### Quantifying transcription factor and pathway activity
-The first step is to quantify the activity of transcription factors and/or pathways from the scRNAseq gene expression data. To better understand the DoRothEA confidence scores used in the `run_dorothea()` function, please refer to the DoRothEA package from the Saez Lab: https://github.com/saezlab/dorothea/. To better understand the inputs for the `run_progeny()` function, please refer to the PROGENy package from the Saez Lab: https://github.com/saezlab/progeny/. 
+The first step is to quantify the activity of transcription factors and/or pathways from the scRNAseq gene expression data. To better understand the DoRothEA confidence scores used in the `run_dorothea()` function, please refer to the DoRothEA package from the Saez Lab: https://github.com/saezlab/dorothea/. To better understand the inputs for the `run_progeny()` function, please refer to the PROGENy package from the Saez Lab: https://github.com/saezlab/progeny/. If interested in inserting custom regulons or pathways, the format must be the same as the regulons and pathways from DoRothEA and PROGENy, respectively. 
 
 ```R
 # Running dorothea and progeny
