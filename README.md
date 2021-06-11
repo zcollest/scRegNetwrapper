@@ -61,5 +61,9 @@ gene_vector <- c("CHD8","DOK2","RGS4","FOCAD-AS1","PYGB") # these genes were gen
 gene_associations <- find_associated_TFs(gene_vector=gene_vector, tf_data_bygroup=dorothea_scores$proportionadjusted_scores_bygroup, effect_size_data=cohend_dorothea)
 ```
 
-### Correlation Analysis (this section is work in progress)
-Another interesting way to visualize the results 
+### Correlation Analysis
+Another interesting way to visualize the results is to look at correlations between TF activity and pathway activities. Similar to the `downstream_heatmap` function, this function allows a user to quickly and easily output a basic correlation matrix, but the source code can easily be modified to produce matrices more aligned to the user's preferences. There is also the option not to render the plot and just return the correlations in data frame form. 
+
+```R
+corr <- correlation_analysis(tf_data = tf_data ,pathway_data = pathway_data, return_corr_data = TRUE, render_plot = TRUE)
+```
