@@ -25,7 +25,7 @@ scRegNetwrapper <- function(seurat_obj,dorothea_conf_scores = c("A","B","C","D")
   dorothea_data <- handle_dorothea_scores(seurat_obj, comparison_feature, topTFs)
   progeny_data <- handle_progeny_scores(seurat_obj,comparison_feature)
 
-  if (length(levels(comparison_feature))){
+  if (length(levels(comparison_feature))==2){
     progeny_effectsize <- pathway_effsize_calc(progeny_data$proportionadjusted_scores_bycell)
     dorothea_effectsize <- tf_effsize_calc(dorothea_data$proportionadjusted_scores_bycell)
     results <- list(seurat_obj = seurat_obj, "dorothea_data" = dorothea_data, "progeny_data" = progeny_data,
