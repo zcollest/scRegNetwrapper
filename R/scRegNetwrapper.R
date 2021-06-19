@@ -21,19 +21,19 @@
 
 scRegNetwrapper <- function(seurat_obj,dorothea_conf_scores = c("A","B","C","D"), topTFs = 30, cores=16, top_progeny_genes=500, organism="Human", comparison_feature){
   seurat_obj <- run_dorothea(seurat_obj, dorothea_conf_scores,cores)
-  seurat_obj <- run_progeny(seurat_obj, top_progeny_genes, organism)
+  seurat_obj <<- run_progeny(seurat_obj, top_progeny_genes, organism)
   dorothea_data <- handle_dorothea_scores(seurat_obj, comparison_feature, topTFs)
   progeny_data <- handle_progeny_scores(seurat_obj,comparison_feature)
 
   if (length(levels(comparison_feature))==2){
     progeny_effectsize <- pathway_effsize_calc(progeny_data$proportionadjusted_scores_bycell)
     dorothea_effectsize <- tf_effsize_calc(dorothea_data$proportionadjusted_scores_bycell)
-    results <- list(seurat_obj = seurat_obj, "dorothea_data" = dorothea_data, "progeny_data" = progeny_data,
+    results <- list("dorothea_data" = dorothea_data, "progeny_data" = progeny_data,
                     "progeny_cohenD" = progeny_effectsize, "dorothea_cohenD" = dorothea_effectsize)
     return(results)
   }
   else{
-    results <- list(seurat_obj = seurat_obj, "dorothea_data" = dorothea_data, "progeny_data" = progeny_data)
+    results <- list("dorothea_data" = dorothea_data, "progeny_data" = progeny_data)
     return(results)
   }
 }
