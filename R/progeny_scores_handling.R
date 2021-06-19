@@ -3,7 +3,7 @@
 #' Takes a Seurat object and produces a list of data frames that are necessary for downstream analysis
 #' @param seurat_obj seurat object
 #' @param comparison_feature which metadata feature do you want to do comparisons for?
-#' @param assay_name if using custom pathways, what's the assay name?
+#' @param assay_name if using custom TFs, what's the assay name?
 #' @keywords progeny score handling
 #' @export
 #' @import Seurat

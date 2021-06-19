@@ -11,7 +11,7 @@ handle_progeny_scores(seurat_obj, comparison_feature, assay_name = NULL)
 
 \item{comparison_feature}{which metadata feature do you want to do comparisons for?}
 
-\item{assay_name}{if using custom pathways, what's the assay name?}
+\item{assay_name}{if using custom TFs, what's the assay name?}
 }
 \description{
 Takes a Seurat object and produces a list of data frames that are necessary for downstream analysis
