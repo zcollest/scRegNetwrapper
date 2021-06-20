@@ -13,3 +13,27 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    Seurat,
+    effsize,
+    corrplot,
+    dorothea,
+    progeny,
+    pheatmap,
+    reticulate,
+    tidyr,
+    tibble
+Config/reticulate:
+    list(
+        packages = list(
+            list(package = "os"),
+            list(package = "scanpy),
+            list(package = "pyscenic",version = "0.11.1"),
+            list(pacakge = "numpy"),
+            list(package = "arboreto"),
+            list(package = "dask", version = "2.30.0""),
+            list(package = "distributed", version = "2.30.0"),
+            list(package = "loompy"),
+        )
+    )
