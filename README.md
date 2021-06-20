@@ -17,7 +17,9 @@ Lastly, load the python functions into the R session with the following R code:
 
 ```R
 run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
+handle_pyscenic_results_path <- system.file("python","handle_SCENIC_results.py", package="scRegNetwrapper")
 source_python(run_pyscenic_path)
+source_python(handle_pyscenic_results_path)
 ```
 
 ## Input 
