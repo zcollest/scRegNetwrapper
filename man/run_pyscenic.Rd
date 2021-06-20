@@ -5,7 +5,7 @@
 \title{Uses reticulate package to run pySCENIC from R}
 \usage{
 run_pyscenic(
-  outdir,
+  dir,
   anndata_path,
   loom_path,
   tfs_path,
@@ -15,7 +15,7 @@ run_pyscenic(
 )
 }
 \arguments{
-\item{outdir}{directory path to output pySCENIC results}
+\item{dir}{directory path to output pySCENIC results}
 
 \item{anndata_path}{path to anndata object}
 
