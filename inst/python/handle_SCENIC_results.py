@@ -7,7 +7,7 @@ from pyscenic.utils import modules_from_adjacencies, load_motifs
 from arboreto.utils import load_tf_names
 from pyscenic.cli.utils import load_signatures
 
-def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_feature, regulon_path, regulon_output_fname, auc_mtx_fname, cellannot_fname, RSS_fname):
+def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_feature, regulon_path):
   os.chdir(dir)
   lf = lp.connect( output_loom_path, mode='r', validate=False )
   adata_output = sc.read( output_loom_path, validate=False)
@@ -21,7 +21,7 @@ def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_featu
   regulons = {}
   for i,r in pd.DataFrame(lf.ra.Regulons,index=lf.ra.Gene).iteritems():
       regulons[i] =  list(r[r==1].index.values)
-  a_file = open(regulon_output_fname, "w")
+  a_file = open('regulons.csv', "w")
   writer = csv.writer(a_file)
   for key, value in regulons.items():
       writer.writerow([key, value])
@@ -29,7 +29,7 @@ def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_featu
   
   # getting AUC matrix and saving it
   auc_mtx = pd.DataFrame( lf.ca.RegulonsAUC, index=lf.ca.CellID)
-  auc_mtx.to_csv(auc_mtx_fname)
+  auc_mtx.to_csv('auc_mtx.csv')
   adata = add_scenic_metadata(adata, auc_mtx, sig)
   cellAnnot = pd.concat(
       [
@@ -37,9 +37,9 @@ def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_featu
       ],
       axis=1
   )
-  cellAnnot.to_csv(cellannot_fname)
+  cellAnnot.to_csv('cellAnnot.csv')
   
   # calculate RSS
   rss_cellType = regulon_specificity_scores( auc_mtx, cellAnnot['cell_type'] )
-  rss_cellType.to_csv(RSS_fname)
+  rss_cellType.to_csv('RSS.csv')
   

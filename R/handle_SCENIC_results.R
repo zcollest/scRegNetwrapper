@@ -14,8 +14,8 @@
 #' @export
 #' @import reticulate
 #' @examples
-#' handle_pyscenic_results(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path, regulon_output_fname="regulons.csv", auc_mtx_fname="auc_mtx.csv", cellannot_fname="cellAnnot.csv", RSS_fname="RSS.csv")
+#' handle_pyscenic_results(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path)
 
-handle_pyscenic_results <- function(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path, regulon_output_fname="regulons.csv", auc_mtx_fname="auc_mtx.csv", cellannot_fname="cellAnnot.csv", RSS_fname="RSS.csv") {
-  scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_feature, regulon_path, regulon_output_fname, auc_mtx_fname, cellannot_fname, RSS_fname)
+handle_pyscenic_results <- function(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path) {
+  scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_feature, regulon_path)
 }

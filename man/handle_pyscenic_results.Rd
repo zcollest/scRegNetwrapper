@@ -9,11 +9,7 @@ handle_pyscenic_results(
   output_loom_path,
   anndata_path,
   comparison_feature = "cell_type",
-  regulon_path,
-  regulon_output_fname = "regulons.csv",
-  auc_mtx_fname = "auc_mtx.csv",
-  cellannot_fname = "cellAnnot.csv",
-  RSS_fname = "RSS.csv"
+  regulon_path
 )
 }
 \arguments{
@@ -39,6 +35,6 @@ handle_pyscenic_results(
 handle pySCENIC results
 }
 \examples{
-handle_pyscenic_results(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path, regulon_output_fname="regulons.csv", auc_mtx_fname="auc_mtx.csv", cellannot_fname="cellAnnot.csv", RSS_fname="RSS.csv")
+handle_pyscenic_results(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path)
 }
 \keyword{pySCENIC}
