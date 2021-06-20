@@ -33,6 +33,6 @@ run_pyscenic(
 Run pySCENIC pipeline
 }
 \examples{
-run_pyscenic(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
+run_pyscenic(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
 }
 \keyword{pySCENIC}
