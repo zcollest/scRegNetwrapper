@@ -4,21 +4,32 @@
 \alias{run_cistarget}
 \title{Uses reticulate package to run CisTarget (regulon prediction) from R}
 \usage{
-run_cistarget(dir, loom_path, rank_db_path, motif_path)
+run_cistarget(
+  dir,
+  adjacencies_fname,
+  loom_path,
+  rank_db_path,
+  motif_path,
+  regulons_fname
+)
 }
 \arguments{
 \item{dir}{directory path to output pySCENIC results}
+
+\item{adjacencies_fname}{filename of adjacencies output}
 
 \item{loom_path}{path to write initial loom file}
 
 \item{rank_db_path}{path to ranking database}
 
 \item{motif_path}{path to motif list}
+
+\item{regulons_fname}{filename of regulons output}
 }
 \description{
 Run pySCENIC pipeline
 }
 \examples{
-run_cistarget(dir, loom_path, rank_db_path, motif_path)
+run_cistarget(dir, adjacencies_fname, loom_path, rank_db_path, motif_path, regulons_fname)
 }
 \keyword{CisTarget}

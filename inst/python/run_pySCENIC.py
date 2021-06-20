@@ -34,7 +34,7 @@ def pyscenic_wrapper(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif
         "nGene": np.array( np.sum(anndata.X.transpose()>0 , axis=0)).flatten() ,
         "nUMI": np.array( np.sum(anndata.X.transpose() , axis=0)).flatten() ,
     }
-    lp.create( loom_path, anndata.X.transpose(), row_attrs, col_attrs)
+    lp.create(loom_path, anndata.X.transpose(), row_attrs, col_attrs)
     
     os.chdir(dir)
     ##### SCENIC #### 
@@ -72,27 +72,27 @@ def setup_loom_wrapper(anndata_path, loom_path):
     }
     lp.create( loom_path, anndata.X.transpose(), row_attrs, col_attrs)
     
-def grn_wrapper(dir, loom_path, tfs_path):
+def grn_wrapper(dir, loom_path, tfs_path, adjacencies_fname):
     os.chdir(dir)
     ##### SCENIC #### 
     # STEP 1: GRN BOOST
-    cmd1 = "/usr/local/bin/pyscenic grn " + loom_path + " " + tfs_path + " -o anndata_adj.csv --num_workers 20"
+    cmd1 = "/usr/local/bin/pyscenic grn " + loom_path + " " + tfs_path + " -o " + adjacencies_fname + " --num_workers 20"
     os.system(cmd1)
     
-def cistarget_wrapper(dir, loom_path, rank_db_path, motif_path):
+def cistarget_wrapper(dir, adjacencies_fname, loom_path, rank_db_path, motif_path, regulons_fname):
     os.chdir(dir)
    # STEP 2/3: Regulon prediction aka cisTarget from CL
     # ranking databases
     db_names = ' '.join( glob.glob(rank_db_path) )
     
     # running it (prunes regulons for which < 80% genes can be matched to the ranking database)
-    cmd2 = "/usr/local/bin/pyscenic grn anndata_adj.csv " + db_names + " --annotations_fname " + motif_path + " --expression_mtx_fname " + loom_path + " --output anndata_reg.csv --mask_dropouts --num_workers 20"
+    cmd2 = "/usr/local/bin/pyscenic ctx " + adjacencies_fname + " " + db_names + " --annotations_fname " + motif_path + " --expression_mtx_fname " + loom_path + " --output " + regulons_fname + " --mask_dropouts --num_workers 20"
     os.system(cmd2)
     
-def aucell_wrapper(dir, loom_path, output_loom_path):
+def aucell_wrapper(dir, regulons_fname, loom_path, output_loom_path):
     # STEP 4: AUCell
     os.chdir(dir)
-    cmd3 = "/usr/local/bin/pyscenic aucell " + loom_path + " anndata_reg.csv --output " + output_loom_path + " --num_workers 20"
+    cmd3 = "/usr/local/bin/pyscenic aucell " + loom_path + " " +  regulons_fname + " --output " + output_loom_path + " --num_workers 20"
     os.system(cmd3)
     
     

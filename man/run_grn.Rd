@@ -4,7 +4,7 @@
 \alias{run_grn}
 \title{Uses reticulate package to run GRN from R}
 \usage{
-run_grn(dir, loom_path, tfs_path)
+run_grn(dir, loom_path, tfs_path, adjacencies_fname)
 }
 \arguments{
 \item{dir}{directory path to output pySCENIC results}
@@ -12,11 +12,13 @@ run_grn(dir, loom_path, tfs_path)
 \item{loom_path}{path to write initial loom file}
 
 \item{tfs_path}{path to list of TFs}
+
+\item{adjacencies_fname}{filename of adjacencies output}
 }
 \description{
 Run GRN from pySCENIC pipeline
 }
 \examples{
-run_grn(dir, loom_path, tfs_path,)
+run_grn(dir, loom_path, tfs_path,adjacencies_fname)
 }
 \keyword{GRN}

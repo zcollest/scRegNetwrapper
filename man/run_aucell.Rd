@@ -4,27 +4,21 @@
 \alias{run_aucell}
 \title{Uses reticulate package to run AUCell from R}
 \usage{
-run_aucell(dir, loom_path, output_loom_path)
+run_aucell(dir, regulons_fname, loom_path, output_loom_path)
 }
 \arguments{
 \item{dir}{directory path to output pySCENIC results}
 
+\item{regulons_fname}{filename of regulons output}
+
 \item{loom_path}{path to write initial loom file}
 
 \item{output_loom_path}{path to write output loom file}
-
-\item{anndata_path}{path to anndata object}
-
-\item{tfs_path}{path to list of TFs}
-
-\item{rank_db_path}{path to ranking database}
-
-\item{motif_path}{path to motif list}
 }
 \description{
 Run AUCell from pySCENIC pipeline
 }
 \examples{
-run_aucell(dir, loom_path, output_loom_path)
+run_aucell(dir, regulons_fname, loom_path, output_loom_path)
 }
 \keyword{pySCENIC}
