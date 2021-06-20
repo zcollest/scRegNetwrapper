@@ -8,6 +8,7 @@ from pyscenic.utils import modules_from_adjacencies, load_motifs
 from arboreto.utils import load_tf_names
 from pyscenic.cli.utils import load_signatures
 from pyscenic.export import add_scenic_metadata
+from pyscenic.rss import regulon_specificity_scores
 
 def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_feature, regulon_path):
   os.chdir(dir)
