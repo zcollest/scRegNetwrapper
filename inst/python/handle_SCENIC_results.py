@@ -32,10 +32,10 @@ def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_featu
   # getting AUC matrix and saving it
   auc_mtx = pd.DataFrame( lf.ca.RegulonsAUC, index=lf.ca.CellID)
   auc_mtx.to_csv('auc_mtx.csv')
-  adata = add_scenic_metadata(adata, auc_mtx, sig)
+  adata_output = add_scenic_metadata(adata_output, auc_mtx, sig)
   cellAnnot = pd.concat(
       [
-          pd.DataFrame( adata.obs['cell_type'], index=lf.ca.CellID )
+          pd.DataFrame( adata_output.obs['cell_type'], index=lf.ca.CellID )
       ],
       axis=1
   )
