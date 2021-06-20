@@ -1,6 +1,6 @@
 #' Reformat the progeny pathway data when you select only the top n genes
 #'
-#' When selecting progeny pathway data and choosing only a subset of the top genes from each pathway, the output is a sparse matrix and is not conducive to downstream analysis. This reformats to a long data frame. 
+#' When selecting progeny pathway data and choosing only a subset of the top genes from each pathway, the output is a sparse matrix and is not conducive for downstream analysis. This reformats to a long data frame.
 #' @param pathway_data progeny pathway data for top n genes (from `get_progeny_pathways()` function)
 #' @keywords reformat progeny pathways
 #' @export

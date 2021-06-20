@@ -29,12 +29,12 @@ scRegNetwrapper <- function(seurat_obj,dorothea_conf_scores = c("A","B","C","D")
     progeny_effectsize <- pathway_effsize_calc(progeny_data$proportionadjusted_scores_bycell)
     dorothea_effectsize <- tf_effsize_calc(dorothea_data$proportionadjusted_scores_bycell)
     obj_name <- seurat_obj@project.name
-    results <- list(obj_name = seurat_obj, "dorothea_data" = dorothea_data, "progeny_data" = progeny_data,
+    results <- list(seurat_obj = seurat_obj, "dorothea_data" = dorothea_data, "progeny_data" = progeny_data,
                     "progeny_cohenD" = progeny_effectsize, "dorothea_cohenD" = dorothea_effectsize)
     return(results)
   }
   else{
-    results <- list(obj_name = seurat_obj, "dorothea_data" = dorothea_data, "progeny_data" = progeny_data)
+    results <- list(seurat_obj = seurat_obj, "dorothea_data" = dorothea_data, "progeny_data" = progeny_data)
     return(results)
   }
 }

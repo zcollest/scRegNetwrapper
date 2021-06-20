@@ -10,7 +10,7 @@ reformat_progeny_pathways(pathway_data)
 \item{pathway_data}{progeny pathway data for top n genes (from \code{get_progeny_pathways()} function)}
 }
 \description{
-When selecting progeny pathway data and choosing only a subset of the top genes from each pathway, the output is a sparse matrix and is not conducive to downstream analysis. This reformats to a long data frame.
+When selecting progeny pathway data and choosing only a subset of the top genes from each pathway, the output is a sparse matrix and is not conducive for downstream analysis. This reformats to a long data frame.
 }
 \examples{
 reformat_progeny_pathways(pathway_data = top500genes_progenypathways)
