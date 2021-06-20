@@ -25,15 +25,17 @@ Imports:
     tidyr,
     tibble
 Config/reticulate:
-    list(
-        packages = list(
-            list(package = "os"),
-            list(package = "scanpy),
-            list(package = "pyscenic",version = "0.11.1"),
-            list(pacakge = "numpy"),
-            list(package = "arboreto"),
-            list(package = "dask", version = "2.30.0""),
-            list(package = "distributed", version = "2.30.0"),
-            list(package = "loompy"),
-        )
+  list(
+    packages = list(
+      list(package = "os"),
+      list(package = "pandas")
+      list(package = "scanpy),
+      list(package = "pyscenic",version = "0.11.1"),
+      list(pacakge = "numpy"),
+      list(package = "arboreto"),
+      list(package = "dask", version = "2.30.0""),
+      list(package = "distributed", version = "2.30.0"),
+      list(package = "loompy"),
     )
+  )
+

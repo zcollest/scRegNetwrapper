@@ -14,6 +14,7 @@
 #' @examples
 #' run_pyscenic(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
 
+
 run_pyscenic <- function(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path) {
   pyscenic_wrapper(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
 }
