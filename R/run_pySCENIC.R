@@ -14,6 +14,8 @@
 #' @examples
 #' run_pyscenic(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
 
+reticulate::py_run_file(system.file("../scRegNetwrapper/inst/python/run_pySCENIC.py", package = "scRegNetwrapper"))
+
 run_pyscenic <- function(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path) {
   pyscenic_wrapper(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
 }

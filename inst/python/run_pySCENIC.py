@@ -19,7 +19,6 @@ from pyscenic.cli.utils import load_signatures
 from pyscenic.prune import prune2df, df2regulons
 from pyscenic.aucell import aucell
  
-
 def pyscenic_wrapper(outdir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path):
     anndata = sc.read(anndata_path,         
     var_names='gene_symbols',
@@ -55,3 +54,4 @@ def pyscenic_wrapper(outdir, anndata_path, loom_path, tfs_path, rank_db_path, mo
     # STEP 4: AUCell
     cmd3 = "/usr/local/bin/pyscenic aucell " + loom_path + " anndata_reg.csv --output " + output_loom_path + " num_workers 20"
     os.system(cmd3)
+  
