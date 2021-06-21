@@ -10,19 +10,18 @@ library(devtools)
 library(reticulate)
 use_python("/usr/bin/python3") # specify whatever python path you'd prefer
 library(progeny) # loading progeny loads global variables that are required for some functions
-install_github("zcollest/scRegNetwrapper")
 ```
 In order to use the Python functions that are contained in this package (pySCENIC analysis), it is necessary to ensure that the proper python dependencies are installed. At the root of this package is a `requirements.txt` file with the Python packages and versions required. Download that file and use the following shell script to download those packages -- note: make sure that these packages are being installed in the python environment that you specified above. 
+
 ```bash
 pip install -r requirements.txt
 ```
-Lastly, load the python functions into the R session with the following R code:
+
+Finally, install and load the package:
 
 ```R
-run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
-handle_pyscenic_results_path <- system.file("python","handle_SCENIC_results.py", package="scRegNetwrapper")
-source_python(run_pyscenic_path)
-source_python(handle_pyscenic_results_path)
+install_github("zcollest/scRegNetwrapper")
+library(scRegNetwrapper)
 ```
 
 ## Input 
