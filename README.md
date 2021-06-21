@@ -2,7 +2,7 @@
 
 ### THIS IS STILL A WORK IN PROGRESS 
 
-Wrapper functions for popular single cell regulatory network analysis (DoRothEA, PROGENy, pySCENIC) as well as tools for downstream analysis.
+Wrapper functions to simplify popular single cell regulatory network analysis ([DoRothEA](https://github.com/saezlab/dorothea), [PROGENy](https://github.com/saezlab/progeny), [pySCENIC](https://github.com/aertslab/pySCENIC)) as well as tools for downstream analysis and method comparisons.
 
 ## Installation
  ```R 
@@ -16,7 +16,6 @@ In order to use the Python functions that are contained in this package (pySCENI
 ```bash
 pip install -r requirements.txt
 ```
-
 Finally, install and load the package:
 
 ```R
@@ -25,14 +24,14 @@ library(scRegNetwrapper)
 ```
 
 ## Input 
-The calculation of DoRothEA/PROGENy scores requires a Seurat object of scRNAseq gene expression data. Downstrean analyses utilize data that is outputted from the `handle_dorothea_scores()` and `handle_progeny_scores()` functions. 
+The calculation of TF/pathway scores using DoRothEA and PROGENy requires a Seurat object of scRNAseq gene expression data. Calculating TF scores using pySCENIC,  requires a path to an anndata object - to convert a Seurat object to anndata, it is recommended to use [sceasy](https://github.com/cellgeni/sceasy). 
 
 ## Tutorial
 
 To obtain more information about any specific function, run `?"function_name"()` in your R session.
 
-### Quantifying transcription factor and pathway activity
-The first step is to quantify the activity of transcription factors and/or pathways from the scRNAseq gene expression data. To better understand the DoRothEA confidence scores used in the `run_dorothea()` function, please refer to the DoRothEA package from the Saez Lab: https://github.com/saezlab/dorothea/. To better understand the inputs for the `run_progeny()` function, please refer to the PROGENy package from the Saez Lab: https://github.com/saezlab/progeny/. If interested in inserting custom regulons or pathways, the format must be the same as the regulons and pathways from DoRothEA and PROGENy, respectively. 
+### Quantifying transcription factor and pathway activity using DoRothEA & PROGENy
+The first step is to quantify the activity of transcription factors and/or pathways from the scRNAseq gene expression data. To better understand the DoRothEA confidence scores used in the `run_dorothea()` function, please refer to the [DoRothEA](https://github.com/saezlab/dorothea/) package from the Saez Lab. To better understand the inputs for the `run_progeny()` function, please refer to the [PROGENy](https://github.com/saezlab/progeny/) package from the Saez Lab. If interested in inserting custom regulons or pathways, the format must be the same as the regulons and pathways from DoRothEA and PROGENy, respectively. 
 
 ```R
 # Running dorothea and progeny
@@ -43,14 +42,40 @@ pbmc <- run_progeny(seurat_obj = pbmc, num_genes = 500, organism = "Human")
 pbmc <- custom_pathways_calc(seurat_obj = pbmc, regulons = regulons, assay_name = "custom_regulon_scores")
 pbmc <- custom_regulons_calc(seurat_obj = pbmc, pathways = pathways, num_genes = 100, organism = "Human", assay_name = "custom_pathway_scores") 
 ```
-### Handling scores for downstream analysis
-These functions organize the cell-wise transcription factor and pathway scores into various data frames that can be used for downstream analyses. The functions require a `comparison_feature` argument, which is important for two reasons: <br>
+### Constructing regulons and quantifying transcription factor activity using pySCENIC
+This package contains functions to easily run the pySCENIC pipeline to quantify TF activity from scRNAseq gene expression data. While there is an [R implementation of the SCENIC pipeline](https://github.com/aertslab/SCENIC), the pySCENIC implementation is faster and more updated. To better undertand the required inputs and computational steps involved in the pySCENIC pipeline, please refer to the [protocols paper](https://www.nature.com/articles/s41596-020-0336-2) and the [tutorial website](https://pyscenic.readthedocs.io/en/latest/index.html). 
+
+```R
+# Run all steps of the pySCENIC pipeline at once
+run_pyscenic(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
+
+# Run each step individually
+run_loom_setup(anndata_path, loom_path)
+run_grn(dir, loom_path, tfs_path)
+run_cistarget(dir,adj_out,loom_path, rank_db_path, motif_path, regulons_fname)
+run_aucell(dir,regulons_fname,loom_path,output_loom_path)
+```
+
+### Handling results for downstream analysis
+With respect to the outputs from DoRothEA and PROGENy, these functions organize the cell-wise transcription factor and pathway activity scores into various data frames that can be used for downstream analyses. The functions require a `comparison_feature` argument, which is important for two reasons: <br>
 1. It defines the output of the heatmap used for downstram analyses
 2. It adjusts the cell-wise scores based on the proportion of cells in each category of the comparison feature (i.e. healthy vs disease).
+
+The outputs from the pySCENIC pipeline are slightly different. The function also requires a `comparison_feature` argument, and the outputted results include: 
+1. Data frame of constructed regulons
+2. Matrix of cell-wise AUC scores for each TF 
+3. A data frame of annotations based on `comparison_feature`.
+4. Data frame of regulon specificity scores.
+
 ```R
-# Handling scores 
+# Handling DoRothEA scores 
 tf_scores <- handle_dorothea_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication, topTFs = 30)
+
+# Handling PROGENy scores 
 pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication)
+
+# Handling pySCENIC results
+scenic_results <-handle_pyscenic_results(dir,output_loom,anndata_path,regulon_path)
 ```
 
 ### Visualizing the results with heatmaps 
