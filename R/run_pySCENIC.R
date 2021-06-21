@@ -35,6 +35,8 @@ run_pyscenic <- function(dir, anndata_path, loom_path, tfs_path, rank_db_path, m
 
 
 run_loom_setup <- function(anndata_path, loom_path){
+  run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
+  source_python(run_pyscenic_path)
   setup_loom_wrapper(anndata_path, loom_path)
 }
 
@@ -52,6 +54,8 @@ run_loom_setup <- function(anndata_path, loom_path){
 #' run_grn(dir, loom_path, tfs_path,adjacencies_fname)
 
 run_grn <- function(dir, loom_path, tfs_path, adjacencies_fname) {
+  run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
+  source_python(run_pyscenic_path)
   grn_wrapper(dir, loom_path, tfs_path, adjacencies_fname)
 }
 
@@ -61,7 +65,7 @@ run_grn <- function(dir, loom_path, tfs_path, adjacencies_fname) {
 #' Run pySCENIC pipeline
 #' @param dir directory path to output pySCENIC results
 #' @param adjacencies_fname filename of adjacencies output
-#' @param loom_path path to write initial loom file
+#' @param loom_path path of initial loom file
 #' @param rank_db_path path to ranking database
 #' @param motif_path path to motif list
 #' @param regulons_fname filename of regulons output
@@ -73,6 +77,8 @@ run_grn <- function(dir, loom_path, tfs_path, adjacencies_fname) {
 
 
 run_cistarget <- function(dir, adjacencies_fname, loom_path, rank_db_path, motif_path, regulons_fname) {
+  run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
+  source_python(run_pyscenic_path)
   cistarget_wrapper(dir, adjacencies_fname, loom_path, rank_db_path, motif_path, regulons_fname)
 }
 
@@ -90,5 +96,7 @@ run_cistarget <- function(dir, adjacencies_fname, loom_path, rank_db_path, motif
 #' run_aucell(dir, regulons_fname, loom_path, output_loom_path)
 
 run_aucell <- function(dir, regulons_fname, loom_path, output_loom_path) {
+  run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
+  source_python(run_pyscenic_path)
   aucell_wrapper(dir, regulons_fname, loom_path, output_loom_path)
 }
