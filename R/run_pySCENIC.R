@@ -16,6 +16,8 @@
 
 
 run_pyscenic <- function(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path) {
+  run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
+  source_python(run_pyscenic_path)
   pyscenic_wrapper(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
 }
 

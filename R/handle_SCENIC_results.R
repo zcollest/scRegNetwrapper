@@ -17,5 +17,8 @@
 #' handle_pyscenic_results(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path)
 
 handle_pyscenic_results <- function(dir, output_loom_path, anndata_path, comparison_feature="cell_type", regulon_path) {
+  handle_pyscenic_results_path <- system.file("python","handle_SCENIC_results.py", package="scRegNetwrapper")
+  source_python(run_pyscenic_path)
+  source_python(handle_pyscenic_results_path)
   scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_feature, regulon_path)
 }
