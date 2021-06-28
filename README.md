@@ -1,7 +1,5 @@
 # scRegNetwrapper
 
-### THIS IS STILL A WORK IN PROGRESS 
-
 Wrapper functions to simplify popular single cell regulatory network analysis ([DoRothEA](https://github.com/saezlab/dorothea), [PROGENy](https://github.com/saezlab/progeny), [pySCENIC](https://github.com/aertslab/pySCENIC)) as well as tools for downstream analysis and method comparisons.
 
 ## Installation
