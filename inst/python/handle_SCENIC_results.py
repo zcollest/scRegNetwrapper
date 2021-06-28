@@ -45,4 +45,7 @@ def scenic_results_wrapper(dir, output_loom_path, anndata_path, comparison_featu
   # calculate RSS
   rss_cellType = regulon_specificity_scores( auc_mtx, cellAnnot['cell_type'] )
   rss_cellType.to_csv('RSS.csv')
+  results = [regulons, auc_mtx, cellAnnot, rss_cellType]
+  return(results)
   
+

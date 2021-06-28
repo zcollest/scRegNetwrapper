@@ -18,7 +18,7 @@ run_cistarget(
 
 \item{adjacencies_fname}{filename of adjacencies output}
 
-\item{loom_path}{path to write initial loom file}
+\item{loom_path}{path of initial loom file}
 
 \item{rank_db_path}{path to ranking database}
 

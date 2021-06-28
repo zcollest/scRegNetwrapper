@@ -1,27 +1,3 @@
-#' Uses reticulate package to run pySCENIC from R
-#'
-#' Run pySCENIC pipeline
-#' @param dir directory path to output pySCENIC results
-#' @param anndata_path path to anndata object
-#' @param loom_path path to write initial loom file
-#' @param tfs_path path to list of TFs
-#' @param rank_db_path path to ranking database
-#' @param motif_path path to motif list
-#' @param output_loom_path path to write output loom file
-#' @keywords pySCENIC
-#' @export
-#' @import reticulate
-#' @examples
-#' run_pyscenic(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
-
-
-run_pyscenic <- function(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path) {
-  run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
-  source_python(run_pyscenic_path)
-  pyscenic_wrapper(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
-}
-
-
 #' Uses reticulate package to set up loom file for pySCENIC pipeline
 #'
 #' Run GRN from pySCENIC
@@ -100,3 +76,4 @@ run_aucell <- function(dir, regulons_fname, loom_path, output_loom_path) {
   source_python(run_pyscenic_path)
   aucell_wrapper(dir, regulons_fname, loom_path, output_loom_path)
 }
+

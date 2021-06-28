@@ -1,10 +1,10 @@
-#' Calculating VIPER scores (TF Activity) from DoRothEA Regulons
+#' Quantifying TF activity from DoRothEA Regulons
 #'
-#' Takes a seurat object and a vector of DoRothEA confidence levels and returns the same Seurat object with a "dorothea" assay of TF activity scores.
-#' @param seurat_obj seurat object
+#' Takes a Seurat object and a vector of DoRothEA confidence levels and returns the same Seurat object with a "dorothea" assay of TF activity scores.
+#' @param seurat_obj Seurat object
 #' @param conf_scores vector of DoRothEA confidence scores (A,B,C,D,E)
 #' @param cores number of cores to use for calculation (default = 16)
-#' @keywords VIPER calculations
+#' @keywords TF Activity with DoRothEA Regulons
 #' @export
 #' @import Seurat
 #' @import dorothea
@@ -55,18 +55,19 @@ get_dorothea_regulons <- function(conf_scores){
 }
 
 
-#' Using VIPER to calculate TF activity using a data frame of custom regulons
+#' Quantifying TF activity using a data frame of custom regulons and the VIPER algorithm
 #'
 #' This function uses VIPER to quantify TF activity given a data frame of custom regulons and returns a Seurat object assay with the results.
 #' @param seurat_obj seurat object
-#' @param regulons dataframe of custom regulons (must be same format as DoRothEA regulons)
+#' @param regulons data frame of custom regulons (must be same format as DoRothEA regulons)
 #' @param assay_name string to name the resulting Seurat object assay
-#' @keywords custom TF regulons
+#' @param cores number of cores to use for calculation (default is 16)
+#' @keywords Quantifying TF activity with custom regulons and the VIPER algorithm
 #' @export
 #' @examples
 #' custom_regulons_calc(data,regulons,"custom_TFactivity"))
 
-custom_regulons_calc <- function(seurat_obj, regulons, assay_name){
+custom_regulons_calc <- function(seurat_obj, regulons, assay_name, cores=16){
   ## compute Viper Scores
   if ("dorothea" %in% Assays(seurat_obj)){
     dorothea_data <- as.matrix(Seurat::GetAssayData(seurat_obj, assay = "dorothea",
@@ -78,7 +79,7 @@ custom_regulons_calc <- function(seurat_obj, regulons, assay_name){
   DefaultAssay(seurat_obj) <- "RNA"
   seurat_obj <- run_viper(seurat_obj, regulons,
                           options = list(method = "scale", minsize = 4,
-                                         eset.filter = FALSE, cores = 16,
+                                         eset.filter = FALSE, cores=cores,
                                          verbose = FALSE))
   seurat_obj[[assay_name]] <- seurat_obj[["dorothea"]]
   seurat_obj@assays[["dorothea"]]@data <- dorothea_data
