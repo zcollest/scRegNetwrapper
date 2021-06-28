@@ -46,10 +46,7 @@ pbmc <- custom_regulons_calc(seurat_obj = pbmc, pathways = pathways, num_genes =
 This package contains functions to easily run the pySCENIC pipeline to quantify TF activity from scRNAseq gene expression data. While there is an [R implementation of the SCENIC pipeline](https://github.com/aertslab/SCENIC), the pySCENIC implementation is faster and more updated. To better undertand the required inputs and computational steps involved in the pySCENIC pipeline, please refer to the [protocols paper](https://www.nature.com/articles/s41596-020-0336-2) and the [tutorial website](https://pyscenic.readthedocs.io/en/latest/index.html). 
 
 ```R
-# Run all steps of the pySCENIC pipeline at once
-run_pyscenic(dir, anndata_path, loom_path, tfs_path, rank_db_path, motif_path, output_loom_path)
-
-# Run each step individually
+# Run each step of the pySCENIC pipeline
 run_loom_setup(anndata_path, loom_path)
 run_grn(dir, loom_path, tfs_path)
 run_cistarget(dir,adj_out,loom_path, rank_db_path, motif_path, regulons_fname)
@@ -57,7 +54,7 @@ run_aucell(dir,regulons_fname,loom_path,output_loom_path)
 ```
 
 ### Handling results for downstream analysis
-With respect to the outputs from DoRothEA and PROGENy, these functions organize the cell-wise transcription factor and pathway activity scores into various data frames that can be used for downstream analyses. The functions require a `comparison_feature` argument, which is important for two reasons: <br>
+With respect to the outputs from DoRothEA and PROGENy, there are functions in this package that organize the cell-wise transcription factor and pathway activity scores into various data frames that can be used for downstream analyses. The functions require a `comparison_feature` argument, which is important for two reasons: <br>
 1. It defines the output of the heatmap used for downstram analyses
 2. It adjusts the cell-wise scores based on the proportion of cells in each category of the comparison feature (i.e. healthy vs disease).
 
@@ -75,10 +72,10 @@ tf_scores <- handle_dorothea_scores(seurat_obj = pbmc, comparison_feature = pbmc
 pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication)
 
 # Handling pySCENIC results
-scenic_results <-handle_pyscenic_results(dir,output_loom,anndata_path,regulon_path)
+pyscenic_results <-handle_pyscenic_results(dir,output_loom,anndata_path,regulon_path)
 ```
 
-### Visualizing the results with heatmaps 
+### Visualizing DoRothEA/PROGENy results with heatmaps 
 There are multiple ways that you can visualize these scores. Perhaps one of the best ways is to look at a heatmap of transcription factor or pathway activity for a given comparison (cluster-wise comparisons, healthy vs disease comparisons, etc.). For example, this can be useful for visualizing cell-type heterogeneity from the perspective of transcription factors and pathways. The `downstream_heatmap` allows a user to quickly and easily output a basic heatmap, but the source code can easily be modified to produce heatmaps more aligned to the user's preferences.
 
 ```R
@@ -86,13 +83,29 @@ downstream_heatmap(data = dorothea_scores$proportionadjusted_tfs_bygroup, title 
 downstream_heatmap(data = progeny_scores$proportionadjusted_pathways_bygroup, title = "progeny pathways, by indication (healthy vs disease)")
 ```
 
-### Effect size calculations (Cohen's D) 
+### Visualizing pySCENIC results with RSS Plots
+pySCENIC utilizes Regulon Specificity Scores (RSS) to determine how specific each regulon is to a given cell type / comparison feature. As of right now, we cannot render the plot in R since it uses matplotlib (we are working on this!). However, you can save the plot and view it as an image or a PDF.
+
+```R
+plot_RSS(dir = '/data', pyscenic_results$cellAnnot, pyscenic_results$RSS, title = "RSS_plot.png")
+```
+
+
+### Effect size calculations (Cohen's D) for DoRothEA and PROGENy results
 To determine statistical significance for comparisons between two groups (i.e. healthy vs disease), the user can calculate effect sizes (Cohen's D scores) for each transcription factor and pathway. The output is a data frame with columns that include transcription factor / pathway name and its corresponding Cohen's D score. 
 
 ```R
 cohend_dorothea <- tf_effsize_calc(data = dorothea_scores$proportionadjusted_scores_bycell)
 cohend_progeny <- pathway_effsize_calc(data = progeny_scores$proportionadjusted_scores_bycell)
 ```
+
+### Correlation Analysis with DoRothEA and PROGENy results
+Another interesting way to visualize the results is to look at correlations between TF activity and pathway activities. Similar to the `downstream_heatmap` function, this function allows a user to quickly and easily output a basic correlation matrix, but the source code can easily be modified to produce matrices more aligned to the user's preferences. There is also the option not to render the plot and just return the correlations in data frame form. 
+
+```R
+corr <- correlation_analysis(tf_data = tf_data ,pathway_data = pathway_data, return_corr_data = TRUE, render_plot = TRUE)
+```
+
 
 ### Finding transcription factors associated with a vector of genes  
 Given an input vector of gene names, this function searches the regulons of the transcriptions for those genes. Optional arguments include effect size data as well as transcription factor activity summarized by comparison group (one of the outputs from the `handle_dorothea_scores()` function.  It returns a list of data frames in which each data frame is a target gene and returns the associated transcription factor as well as the effect size for each associated transcription factor with respect to the comparison group. 
@@ -102,9 +115,5 @@ gene_vector <- c("CHD8","DOK2","RGS4","FOCAD-AS1","PYGB") # these genes were gen
 gene_associations <- find_associated_TFs(gene_vector=gene_vector, tf_data_bygroup=dorothea_scores$proportionadjusted_scores_bygroup, effect_size_data=cohend_dorothea)
 ```
 
-### Correlation Analysis
-Another interesting way to visualize the results is to look at correlations between TF activity and pathway activities. Similar to the `downstream_heatmap` function, this function allows a user to quickly and easily output a basic correlation matrix, but the source code can easily be modified to produce matrices more aligned to the user's preferences. There is also the option not to render the plot and just return the correlations in data frame form. 
-
-```R
-corr <- correlation_analysis(tf_data = tf_data ,pathway_data = pathway_data, return_corr_data = TRUE, render_plot = TRUE)
-```
+### Note on Code
+Some of the code used in this package (particularly for the steps involving quantifying TF and pathway activity) has been adapted from the vignettes for DoRothEA, PROGENy, and pySCENIC. There are links to these packages and their corresponding vignettes at the top of this README.
