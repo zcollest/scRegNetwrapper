@@ -45,10 +45,10 @@ This package contains functions to easily run the pySCENIC pipeline to quantify 
 
 ```R
 # Run each step of the pySCENIC pipeline
-run_loom_setup(anndata_path, loom_path)
-run_grn(dir, loom_path, tfs_path)
-run_cistarget(dir,adj_out,loom_path, rank_db_path, motif_path, regulons_fname)
-run_aucell(dir,regulons_fname,loom_path,output_loom_path)
+run_loom_setup(anndata_path = "pbmc.h5ad", loom_path = "pbmc.loom")
+run_grn(dir = "path/to/output/results", loom_path = "pbmc.loom" , tfs_path = "path/to/input/TFlist.txt", adjacencies_fname = "pbmc_adj.csv")
+run_cistarget(dir = "path/to/output/results", adjacencies_fname = "pbmc_adj.csv", loom_path = "pbmc.loom", rank_db_path ="path/to/rankdb.feather", motif_path = "path/to/motif.tbl", regulons_fname = "pbmc_reg.csv")
+run_aucell(dir = "path/to/output/results",regulons_fname = "pbmc_reg.csv",loom_path = "pbmc.loom",output_loom_path = "pbmc_output.loom")
 ```
 
 ### Handling results for downstream analysis
@@ -70,7 +70,7 @@ tf_scores <- handle_dorothea_scores(seurat_obj = pbmc, comparison_feature = pbmc
 pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication)
 
 # Handling pySCENIC results
-pyscenic_results <-handle_pyscenic_results(dir,output_loom,anndata_path,regulon_path)
+pyscenic_results <- handle_pyscenic_results(dir = "path/to/output",output_loom = "pbmc_output.loom", anndata_path "anndata.h5ad",regulon_path = "path/to/pySCENIC/ regulons.csv")
 ```
 
 ### Visualizing DoRothEA/PROGENy results with heatmaps 
@@ -106,6 +106,7 @@ corr <- correlation_analysis(tf_data = tf_data ,pathway_data = pathway_data, ret
 
 
 ### Finding transcription factors associated with a vector of genes  
+Note: right now, this only works with the output from DoRothEA...working to add support for pySCENIC regulons too.  <br> <br>
 Given an input vector of gene names, this function searches the regulons of the transcriptions for those genes. Optional arguments include effect size data as well as transcription factor activity summarized by comparison group (one of the outputs from the `handle_dorothea_scores()` function.  It returns a list of data frames in which each data frame is a target gene and returns the associated transcription factor as well as the effect size for each associated transcription factor with respect to the comparison group. 
 
 ```R
