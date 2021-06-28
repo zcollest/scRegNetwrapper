@@ -20,14 +20,14 @@ run_loom_setup <- function(anndata_path, loom_path){
 #'
 #' Run GRN from pySCENIC pipeline
 #' @param dir directory path to output pySCENIC results
-#' @param loom_path path to write initial loom file
+#' @param loom_path path to initial loom file
 #' @param tfs_path path to list of TFs
-#' @param adjacencies_fname filename of adjacencies output
+#' @param adjacencies_fname filename for outputting adjacencies
 #' @keywords GRN
 #' @export
 #' @import reticulate
 #' @examples
-#' run_grn(dir, loom_path, tfs_path,adjacencies_fname)
+#' run_grn(dir, loom_path, tfs_path, adjacencies_fname)
 
 run_grn <- function(dir, loom_path, tfs_path, adjacencies_fname) {
   run_pyscenic_path <- system.file("python","run_pySCENIC.py", package="scRegNetwrapper")
@@ -41,10 +41,10 @@ run_grn <- function(dir, loom_path, tfs_path, adjacencies_fname) {
 #' Run pySCENIC pipeline
 #' @param dir directory path to output pySCENIC results
 #' @param adjacencies_fname filename of adjacencies output
-#' @param loom_path path of initial loom file
+#' @param loom_path path to initial loom file
 #' @param rank_db_path path to ranking database
 #' @param motif_path path to motif list
-#' @param regulons_fname filename of regulons output
+#' @param regulons_fname filename for outputting regulons
 #' @keywords CisTarget
 #' @export
 #' @import reticulate
@@ -63,7 +63,7 @@ run_cistarget <- function(dir, adjacencies_fname, loom_path, rank_db_path, motif
 #' Run AUCell from pySCENIC pipeline
 #' @param dir directory path to output pySCENIC results
 #' @param regulons_fname filename of regulons output
-#' @param loom_path path to write initial loom file
+#' @param loom_path path to initial loom file
 #' @param output_loom_path path to write output loom file
 #' @keywords pySCENIC
 #' @export

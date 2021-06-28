@@ -9,16 +9,16 @@ run_grn(dir, loom_path, tfs_path, adjacencies_fname)
 \arguments{
 \item{dir}{directory path to output pySCENIC results}
 
-\item{loom_path}{path to write initial loom file}
+\item{loom_path}{path to initial loom file}
 
 \item{tfs_path}{path to list of TFs}
 
-\item{adjacencies_fname}{filename of adjacencies output}
+\item{adjacencies_fname}{filename for outputting adjacencies}
 }
 \description{
 Run GRN from pySCENIC pipeline
 }
 \examples{
-run_grn(dir, loom_path, tfs_path,adjacencies_fname)
+run_grn(dir, loom_path, tfs_path, adjacencies_fname)
 }
 \keyword{GRN}

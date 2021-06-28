@@ -18,13 +18,13 @@ run_cistarget(
 
 \item{adjacencies_fname}{filename of adjacencies output}
 
-\item{loom_path}{path of initial loom file}
+\item{loom_path}{path to initial loom file}
 
 \item{rank_db_path}{path to ranking database}
 
 \item{motif_path}{path to motif list}
 
-\item{regulons_fname}{filename of regulons output}
+\item{regulons_fname}{filename for outputting regulons}
 }
 \description{
 Run pySCENIC pipeline

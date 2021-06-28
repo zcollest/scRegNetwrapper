@@ -11,7 +11,7 @@ run_aucell(dir, regulons_fname, loom_path, output_loom_path)
 
 \item{regulons_fname}{filename of regulons output}
 
-\item{loom_path}{path to write initial loom file}
+\item{loom_path}{path to initial loom file}
 
 \item{output_loom_path}{path to write output loom file}
 }

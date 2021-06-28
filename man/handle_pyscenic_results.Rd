@@ -15,21 +15,21 @@ handle_pyscenic_results(
 \arguments{
 \item{dir}{directory path to output pySCENIC results}
 
-\item{output_loom_path}{path to of outputted loom file}
+\item{output_loom_path}{path to output loom file}
 
-\item{anndata_path}{path to anndata object}
+\item{anndata_path}{path to initial anndata object}
 
-\item{comparison_feature}{which obs feature from the anndata should we look at? for RSS}
+\item{comparison_feature}{which obs feature from the anndata should we look at? for RSS.}
 
-\item{regulon_path}{path to the reg.csv output from CisTarget}
+\item{regulon_path}{path to the regulon output from CisTarget}
 
-\item{regulon_output_fname}{filename for processed regulons (.csv)}
+\item{regulon_output_fname}{file name for writing processed regulons (.csv)}
 
-\item{auc_mtx_fname}{filename for AUC matrix (.csv)}
+\item{auc_mtx_fname}{filename for writing AUC matrix (.csv)}
 
-\item{cellannot_fname}{filename for cellAnnot matrix (.csv)}
+\item{cellannot_fname}{filename for writing cellAnnot matrix (.csv)}
 
-\item{RSS_fname}{filename for regulon specificity scores matrix (.csv)}
+\item{RSS_fname}{filename for writing regulon specificity scores matrix (.csv)}
 }
 \description{
 handle pySCENIC results
