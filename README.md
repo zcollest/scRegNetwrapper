@@ -70,7 +70,7 @@ tf_scores <- handle_dorothea_scores(seurat_obj = pbmc, comparison_feature = pbmc
 pathway_scores <- handle_progeny_scores(seurat_obj = pbmc, comparison_feature = pbmc@meta.data$indication)
 
 # Handling pySCENIC results
-pyscenic_results <- handle_pyscenic_results(dir = "path/to/output",output_loom = "pbmc_output.loom", anndata_path "anndata.h5ad",regulon_path = "path/to/pySCENIC/ regulons.csv")
+pyscenic_results <- handle_pyscenic_results(dir = "path/to/output", output_loom = "pbmc_output.loom", anndata_path "anndata.h5ad", comparison_feature = "cell_type", regulon_path = "path/to/pySCENIC/ regulons.csv")
 ```
 
 ### Visualizing DoRothEA/PROGENy results with heatmaps 
